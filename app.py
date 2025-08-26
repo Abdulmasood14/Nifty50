@@ -501,37 +501,6 @@ def show_company_details(processor):
     else:
         st.info("No links available for this company")
     
-    # Extracted Text Content Section
-    st.markdown("<h3 class='section-header'>Extracted Text Content</h3>", unsafe_allow_html=True)
-    
-    text_content = data.get('extracted_text', '')
-    if text_content and text_content.strip() and text_content.lower() != 'nan':
-        # Text search
-        text_search = st.text_input("Search in text content", placeholder="Enter keyword to search...")
-        
-        display_text = text_content
-        if text_search and text_search in text_content.lower():
-            # Simple highlighting
-            display_text = text_content.replace(text_search, f"**{text_search}**")
-        
-        # Show preview
-        st.text_area("Content Preview", text_content[:500] + "..." if len(text_content) > 500 else text_content, height=100)
-        
-        # Full content in expandable section
-        with st.expander("View Full Content", expanded=False):
-            st.markdown(display_text)
-        
-        # Download text content
-        if st.button("Download Text Content"):
-            st.download_button(
-                label="Download Text",
-                data=text_content,
-                file_name=f"{selected_company}_content_{st.session_state.selected_date.strftime('%d%m%Y')}.txt",
-                mime="text/plain"
-            )
-    else:
-        st.info("No text content available for this company")
-    
     # Raw data section
     st.markdown("<h3 class='section-header'>Raw Data</h3>", unsafe_allow_html=True)
     
